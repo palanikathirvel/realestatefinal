@@ -41,9 +41,10 @@ const Login = () => {
 
     try {
       // Check if it's admin login
-      if(formData.email === "admin@realestate.com" && formData.password === "admin123") {
+      if (formData.email === "admin@realestate.com" && formData.password === "admin123") {
         // Make API call to admin login endpoint
-        const response = await fetch('http://localhost:5000/api/admin/login', {
+        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        const response = await fetch(`${API_BASE_URL.split('/api')[0]}/api/admin/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -103,8 +104,8 @@ const Login = () => {
       const email = decoded.email;
       const name = decoded.name;
 
-     formData.email=email;
-     formData.password="GOOGLE_AUTH";
+      formData.email = email;
+      formData.password = "GOOGLE_AUTH";
     } catch (err) {
       console.error("Google signup error:", err);
       alert("Google sign up failed");
@@ -256,7 +257,7 @@ const Login = () => {
           <p class="font-bold text-gray-600">or</p>
           <br>
           </br>
-          <GoogleLogin onClick={() => {handleGoogleLogin}}
+          <GoogleLogin onClick={() => { handleGoogleLogin }}
           />
         </div>
 

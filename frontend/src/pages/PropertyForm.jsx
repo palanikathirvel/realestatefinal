@@ -167,9 +167,9 @@ const PropertyForm = ({ onSuccess }) => {
             furnished: property.features?.furnished || '',
             amenities: property.features?.amenities || [],
             rooms: property.features?.rooms || [],
-          specialRooms: property.features?.specialRooms?.map(r => typeof r === 'string' ? r : r.name) || []
+            specialRooms: property.features?.specialRooms?.map(r => typeof r === 'string' ? r : r.name) || []
           },
-          images: property.images?.map(img => ({url: img.base64 || img.url, ...img})) || []
+          images: property.images?.map(img => ({ url: img.base64 || img.url, ...img })) || []
         });
         // Recalculate price for edit
         if (property.type === 'land' && property.pricePerAcre && property.acres) {
@@ -443,7 +443,7 @@ const PropertyForm = ({ onSuccess }) => {
     try {
       setSubmitLoading(true);
 
-      const API_BASE = 'http://localhost:5000'; // Adjust if your backend URL differs; use process.env.REACT_APP_API_URL in production
+      const API_BASE = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.split('/api')[0] : 'http://localhost:5000'; // Use environment variable for production
 
       // Helper to make URL absolute
       const makeAbsoluteUrl = (url) => {
@@ -479,12 +479,12 @@ const PropertyForm = ({ onSuccess }) => {
 
       // Add price only for non-rental
       if (formData.type !== 'rental') {
-      if (formData.type === 'land') {
-        transformedData.pricePerAcre = parseFloat(formData.pricePerAcre);
-        transformedData.price = calculatedPrice;
-      } else {
-        transformedData.price = parseInt(formData.price);
-      }
+        if (formData.type === 'land') {
+          transformedData.pricePerAcre = parseFloat(formData.pricePerAcre);
+          transformedData.price = calculatedPrice;
+        } else {
+          transformedData.price = parseInt(formData.price);
+        }
       }
       // Handle images: upload any selected files first, then include URLs
       if (formData.images && formData.images.length > 0) {
