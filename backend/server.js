@@ -27,6 +27,7 @@ app.use(cors({
     'http://localhost:5174',
     'http://localhost:5175',
     'http://localhost:3000',
+    'https://realestatefinalfrontend.vercel.app',
     process.env.FRONTEND_URL
   ].filter(Boolean), // Remove any undefined values
   credentials: true
