@@ -1,0 +1,166 @@
+@startuml Real_Estate_ER_Diagram
+
+!define ENTITY entity
+!define RELATIONSHIP relationship
+
+' Entities
+ENTITY User {
+  * _id : ObjectId <<PK>>
+  --
+  * name : String
+  * email : String <<unique>>
+  * password : String
+  * role : Enum(user,agent,admin)
+  * phone : String
+  * status : Enum(active,blocked)
+  profileImage : String
+  address : Object
+  emailVerified : Boolean
+  favorites : Array[ObjectId]
+  createdAt : Date
+  updatedAt : Date
+}
+
+ENTITY Property {
+  * _id : ObjectId <<PK>>
+  --
+  * type : Enum(land,house,rental)
+  * title : String
+  * description : String
+  * location : Object
+  * squareFeet : Number
+  * price : Number
+  * ownerDetails : Object
+  verificationStatus : Enum
+  * uploadedBy : ObjectId <<FK>>
+  images : Array[Object]
+  views : Number
+  contactRequests : Number
+  createdAt : Date
+  updatedAt : Date
+}
+
+ENTITY House {
+  * _id : ObjectId <<PK>>
+  --
+  features : Object
+  rooms : Array[Object]
+  specialRooms : Array[Object]
+  geoTagPhoto : Object
+  specifications : Object
+  video : Object
+}
+
+ENTITY Land {
+  * _id : ObjectId <<PK>>
+  --
+  * surveyNumber : String
+  * pricePerAcre : Number
+  facilities : Object
+  video : Object
+}
+
+ENTITY Rental {
+  * _id : ObjectId <<PK>>
+  --
+  * monthlyPayment : Object
+  * rules : Array[String]
+  charges : Array[Object]
+  rooms : Array[Object]
+  agreement : Object
+  advancePayment : Object
+  video : Object
+}
+
+ENTITY Survey {
+  * _id : ObjectId <<PK>>
+  --
+  * surveyNumber : String <<unique>>
+  * district : String
+  * taluk : String
+  valid : Boolean
+  area : Number
+  landType : Enum
+  ownerDetails : Object
+  status : Enum
+  createdAt : Date
+  updatedAt : Date
+}
+
+ENTITY Activity {
+  * _id : ObjectId <<PK>>
+  --
+  * userId : ObjectId <<FK>>
+  * action : String
+  details : Object
+  * timestamp : Date
+  ipAddress : String
+  userAgent : String
+}
+
+ENTITY Notification {
+  * _id : ObjectId <<PK>>
+  --
+  * userId : ObjectId <<FK>>
+  * message : String
+  * type : Enum
+  read : Boolean
+  relatedEntity : Object
+  createdAt : Date
+}
+
+ENTITY OTP {
+  * _id : ObjectId <<PK>>
+  --
+  * email : String
+  * otp : String
+  * purpose : Enum
+  verified : Boolean
+  expiresAt : Date
+  createdAt : Date
+  attempts : Number
+  userId : ObjectId <<FK>>
+}
+
+ENTITY AdminSettings {
+  * _id : ObjectId <<PK>>
+  --
+  autoVerification : Boolean
+  notificationPrefs : Object
+  systemMaintenance : Boolean
+  maintenanceMessage : String
+  updatedBy : ObjectId <<FK>>
+  updatedAt : Date
+}
+
+' Relationships
+User ||--o{ Property : "uploads"
+User ||--o{ Activity : "performs"
+User ||--o{ Notification : "receives"
+User ||--o{ OTP : "requests"
+User ||--o| AdminSettings : "configures"
+
+Property ||--|| House : "ISA"
+Property ||--|| Land : "ISA"
+Property ||--|| Rental : "ISA"
+
+Survey ||--o{ Land : "validates"
+
+' Notes
+note right of Property
+  Base entity for all
+  property types with
+  common attributes
+end note
+
+note right of Survey
+  Validates land survey
+  numbers for verification
+end note
+
+note right of OTP
+  Enables secure contact
+  access and verification
+end note
+
+@enduml

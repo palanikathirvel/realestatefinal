@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+  * {
+    @apply border-gray-300;
+  }
+  
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-white text-gray-900 antialiased;
+  }
+  
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}
+
+/* Custom component styles */
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-primary-600 border border-primary-600 px-4 py-2 rounded-lg font-medium hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent text-gray-700 border border-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200;
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200;
+  }
+  
+  .card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm p-6;
+  }
+  
+  .property-card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden;
+  }
+
+  /* Professional Split Background Utility Classes */
+  .bg-professional-split {
+    background: linear-gradient(to bottom, white 0%, white 50%, #f0f9ff 50%, #f0f9ff 100%);
+  }
+  
+  .bg-professional-split-reverse {
+    background: linear-gradient(to bottom, #f0f9ff 0%, #f0f9ff 50%, white 50%, white 100%);
+  }
+  
+  .bg-professional-diagonal {
+    background: linear-gradient(135deg, white 0%, white 48%, #f0f9ff 52%, #f0f9ff 100%);
+  }
+  
+  .bg-professional-vertical {
+    background: linear-gradient(to right, white 0%, white 50%, #f0f9ff 50%, #f0f9ff 100%);
+  }
+  
+  .bg-subtle-gradient {
+    background: linear-gradient(to bottom, #fafcff 0%, white 25%, white 75%, #f0f9ff 100%);
+  }
+  
+  .bg-modern-fade {
+    background: linear-gradient(to bottom, white 0%, #fafcff 30%, #f0f9ff 70%, #e6f4ff 100%);
+  }
+}
